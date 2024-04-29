@@ -1,0 +1,147 @@
+.title {
+    font-size: 20px;
+    font-weight: 500;
+    margin-bottom: 22px;
+    background-color: rgba(230, 230, 230, 0.380);
+    padding: 7px 0px 7px 15px;
+    border-radius: 5px;
+}
+
+.left {
+    width: 90%;
+}
+
+/* The container */
+.containerShip {
+    display: block;
+    position: relative;
+    padding-left: 55px;
+    margin-bottom: 30px;
+    cursor: pointer;
+    font-size: 17px;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+
+.containerShip img {
+    margin-left: 20px;
+}
+
+/* Hide the browser's default radio button */
+.containerShip input {
+    position: absolute;
+    opacity: 0;
+    cursor: pointer;
+}
+
+/* Create a custom radio button */
+.checkmark {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 23px;
+    width: 23px;
+    border-radius: 50%;
+    border: 1px solid rgba(80, 80, 80, 0.478);
+}
+
+/* On mouse-over, add a grey background color */
+.containerShip:hover input~.checkmark {
+    background-color: rgba(197, 197, 197, 0.888);
+}
+
+/* When the radio button is checked, add a blue background */
+.containerShip input:checked~.checkmark {
+    background-color: rgba(197, 197, 197, 0.888);
+}
+
+/* Create the indicator (the dot/circle - hidden when not checked) */
+.checkmark:after {
+    content: "";
+    position: absolute;
+    display: none;
+}
+
+/* Show the indicator (dot/circle) when checked */
+.containerShip input:checked~.checkmark:after {
+    display: block;
+}
+
+/* Style the indicator (dot/circle) */
+.containerShip .checkmark:after {
+    top: 7.5px;
+    left: 7.5px;
+    width: 6.5px;
+    height: 6.5px;
+    border-radius: 50%;
+    background: white;
+}
+
+.right {
+    border-radius: 5px;
+    background-color: rgba(230, 230, 230, 0.380);
+    padding: 15px;
+}
+
+.right .title1 {
+    font-weight: 700;
+    font-size: 20px;
+}
+
+.hrTitle {
+    opacity: 0.9;
+}
+
+.float-left {
+    float: left;
+    width: 65%;
+}
+
+.float-right {
+    float: right;
+    text-align: right;
+    width: 35%;
+}
+
+.right-products .info .text1 {
+    font-size: 17px;
+    font-weight: 500;
+}
+
+.right-products .info .text2 {
+    font-size: 17px;
+}
+
+.right-products .addToCart {
+    font-size: 17px;
+    color: #eee;
+    font-weight: 500;
+    text-decoration: none;
+    text-align: center;
+}
+
+.right-products .addToCart div{
+    border-radius: 40px;
+    background-color: rgb(25, 25, 25);
+    padding: 17px 0px 17px 0px;
+}
+
+.right-products .addToCart div:hover {
+    background-color: rgb(135, 135, 135);
+    cursor: pointer;
+}
+
+.clear {
+    clear: both;
+}
+
+.cartNone {
+    text-align: center;
+    padding: 100px 0px 100px 0px;
+}
+
+.textNone {
+    font-weight: 500;
+}

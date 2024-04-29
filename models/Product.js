@@ -1,0 +1,32 @@
+const mongoose = require("mongoose");
+const productSchema = mongoose.Schema({
+    Name: String,
+    Price: Number,
+    Type: String,
+    Status: String,
+    Avatar: String,
+    detailAvatar1: String,
+    detailAvatar2: String,
+    detailAvatar3: String,
+    detailAvatar4: String,
+    detailAvatar5: String,
+    detailAvatar6: String,
+    detailAvatar7: String,
+    detailAvatar8: String,
+    Description: String,
+    Size35: Number,
+    Size36: Number,
+    Size37: Number,
+    Size38: Number,
+    Size39: Number,
+    Size40: Number,
+    Size41: Number,
+    Size42: Number,
+    Size43: Number,
+    Size44: Number,
+    Size45: Number,
+    Size46: Number,
+    DateCreate: String,
+
+})
+module.exports = mongoose.model("Product", productSchema);

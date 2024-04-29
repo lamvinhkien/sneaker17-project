@@ -1,0 +1,135 @@
+body {
+    font-family: Verdana;
+}
+
+.content .left {
+    display: flex;
+}
+
+.content .left .detailAvatar {
+    width: 13%;
+}
+
+.content .left .detailAvatar .box {
+    padding: 0px 0px 6px 0px;
+}
+
+.content .left .detailAvatar .box img {
+    width: 70%;
+    opacity: 0.5;
+    border-radius: 5px;
+    box-shadow: 0px 0px 2px rgb(179, 179, 179);
+}
+
+.content .left .detailAvatar .box img:hover {
+    opacity: 1;
+    cursor: pointer;
+}
+
+.content .left .avatar {
+    width: 87%;
+}
+
+.content .left .avatar img {
+    width: 89.7%;
+    border-radius: 5px;
+    box-shadow: 0px 0px 2px rgb(179, 179, 179);
+}
+
+.content .right .name {
+    font-size: 26px;
+    font-weight: 500;
+}
+
+.content .right .type {
+    font-size: 18px;
+    font-weight: 400;
+    font-style: italic;
+}
+
+.content .right .price {
+    font-size: 20px;
+    font-weight: 500;
+    margin-top: 12px;
+}
+
+.content .right .size {
+    margin-top: 18px;
+}
+
+.content .right .size .title {
+    font-size: 17px;
+    font-weight: 500;
+}
+
+.content .right .selectSize {
+    display: grid;
+    grid-template-columns: auto auto auto;
+}
+
+.content .right .selectSize .box {
+    height: 50px;
+}
+
+.content .right .selectSize .box label {
+    width: 92.5%;
+    font-size: 17px;
+}
+
+.content .addToCart {
+    margin-top: 15px;
+}
+
+.content .addToCart .addBtn {
+    width: 100%;
+    height: 60px;
+    font-size: 17px;
+    border: none;
+    border-radius: 40px;
+    background-color: rgb(25, 25, 25);
+    color: #eee;
+    font-weight: 500;
+}
+
+.content .addToCart .addBtn:hover {
+    background-color: rgb(135, 135, 135);
+}
+
+.content .addToCart .soldOut {
+    width: 100%;
+    height: 60px;
+    font-size: 17px;
+    border: none;
+    border-radius: 40px;
+    background-color: rgb(25, 25, 25);
+    color: #eee;
+    font-weight: 500;
+    opacity: 0.6;
+}
+
+.content .addToFavourite {
+    margin-top: 12px;
+}
+
+.content .addToFavourite button {
+    width: 100%;
+    height: 60px;
+    font-size: 17px;
+    border: none;
+    border-radius: 40px;
+    background-color: rgb(255, 255, 255);
+    color: #171717;
+    font-weight: 500;
+    border: 1px solid rgb(150, 150, 150);
+}
+
+.content .addToFavourite button:hover {
+    border: 1px solid rgb(10, 10, 10);
+}
+
+.warningSize {
+    text-align: center;
+    color: rgb(228, 63, 63);
+    font-weight: 500;
+    font-size: 16.5px;
+}

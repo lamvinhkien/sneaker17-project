@@ -1,0 +1,87 @@
+hr {
+    border-radius: 50%;
+    opacity: 0.5;
+    background-color: black;
+}
+
+.left .box ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+.left .box ul li button {
+    font-size: 16px;
+    background: none;
+    border: none;
+    padding: 0;
+    font: inherit;
+    cursor: pointer;
+    outline: inherit;
+}
+
+.left .box ul li button:hover {
+    cursor: pointer;
+    color: rgb(140, 140, 140);
+}
+
+.right a {
+    text-decoration: none;
+}
+
+.right img {
+    width: 100%;
+    border-radius: 10px 10px 0px 0px;
+}
+
+.value .Name {
+    font-size: 18px;
+    font-weight: 600;
+    color: rgb(37, 37, 37);
+}
+
+.value .BrandAndType {
+    font-size: 15px;
+    font-style: italic;
+    color: rgb(112, 112, 112);
+    font-weight: 400;
+}
+
+.value .Price {
+    font-size: 17px;
+    color: rgb(112, 112, 112);
+    color: rgb(37, 37, 37);
+    font-weight: 600;
+}
+
+#paging {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#paging ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+}
+
+#paging .paginationjs-page,
+.paginationjs-ellipsis,
+.paginationjs-next,
+.paginationjs-prev {
+    padding: 0px 10px 0px 10px;
+    width: 40px;
+    height: 40px;
+    line-height: 40px;
+    text-align: center;
+    border-radius: 5px;
+    font-size: 17px;
+    cursor: pointer;
+}
+
+#paging .active {
+    background-color: rgb(118, 121, 132);
+    color: white;
+}

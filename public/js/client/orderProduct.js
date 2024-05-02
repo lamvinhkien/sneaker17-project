@@ -47,6 +47,9 @@ $("#completeOrder").on("click", () => {
       warningText("#city")
       warningText("#district")
       warningText("#ward")
+      warningRadio("#shipMethodHid", "#warningRadio1", "giao hàng")
+      warningRadio("#paymentMethodHid", "#warningRadio2", "thanh toán")
+
     }
   })
 })
@@ -96,11 +99,19 @@ function renderOrder() {
 
 }
 
-function warningText(id){
-  if($(id).val() == ""){
+function warningText(id) {
+  if ($(id).val() == "") {
     $(id).addClass("border-danger")
   } else {
     $(id).removeClass("border-danger")
+  }
+}
+
+function warningRadio(id1, id2, note) {
+  if ($(id1).val() == "") {
+    $(id2).html("Vui lòng chọn phương thức " + note + "!").addClass("text-danger fst-italic text-center")
+  } else {
+    $(id2).html("").removeClass("text-danger")
   }
 }
 

@@ -61,17 +61,6 @@ $(document).ready(function () {
     uploadImage("detailAvatar7", "/detail-avatar-7", "detailAvatarHide7", "labelDetail7", "showDetail7")
     uploadImage("detailAvatar8", "/detail-avatar-8", "detailAvatarHide8", "labelDetail8", "showDetail8")
 
-    $("#btnLogout").click(() => {
-        let token = getCookie("TOKEN")
-        $.post("/admin/logout", { Token: token }, (data) => {
-            if (data.result === 1) {
-                window.location = "/admin"
-            } else {
-                alert("Thoát không thành công!")
-            }
-        })
-    })
-
     $("#txtPrice").each((i, ele) => {
         let clone = $(ele).clone(false)
         clone.attr("type", "text")

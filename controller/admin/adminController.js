@@ -155,7 +155,7 @@ module.exports = function (app, router, objJSON) {
         }
     })
 
-    router.post("/admin/logout", checkLogin,(req, res) => {
+    router.post("/admin/logout", checkLogin, (req, res) => {
         if (!req.body.Token) {
             res.json({ result: 0, message: "Không có Token" });
         } else {

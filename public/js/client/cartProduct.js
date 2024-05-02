@@ -109,10 +109,7 @@ function minusQuantity(index, quantity) {
         localStorage.setItem("products", JSON.stringify(productInCart))
         renderProduct()
         totalMoney()
-    } else {
-        alert("Sản phẩm phải có số lượng lớn hơn 0.")
     }
-
 }
 
 function formatMoney(num) {

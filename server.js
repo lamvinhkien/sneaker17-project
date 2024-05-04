@@ -26,7 +26,6 @@ function loadConfigFile(){
             require("./controller/admin/adminController")(app, router, objJSON);
             require("./controller/admin/uploadImage")(app, router, objJSON);
             require("./controller/admin/orderController")(app, router, objJSON);
-            require("./controller/admin/customerController")(app, router, objJSON);
             require("./controller/client/indexController")(app, router, objJSON);
             require("./controller/client/detailController")(app, router, objJSON);
             require("./controller/client/cartController")(app, router, objJSON);

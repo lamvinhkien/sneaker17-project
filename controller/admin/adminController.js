@@ -123,30 +123,50 @@ module.exports = function (app, router, objJSON) {
 
             User.findOne({ Account: account })
                 .then((data) => {
-                    if (password != data.Password) {
-                        res.json({ result: 0, message: "Sai mật khẩu" });
+                    let now = Date.now()
+                    let wrong = data.WrongPasswordTime
+                    let timeLock = data.ExpirationLock
+                    let account = { Account: data.Account }
+
+                    if (timeLock > now) {
+                        res.json({ result: 0, message: `Tài khoản đã bị khoá trong 10 giây` });
+                    } else if (wrong >= 4) {
+                        User.updateOne(account, { WrongPasswordTime: 0, ExpirationLock: now + 10000 })
+                            .then(() => {
+                                res.json({ result: 0, message: `Sai mật khẩu nhiều lần, tài khoản đã bị khoá trong 10 giây` });
+                            })
                     } else {
-                        jwt.sign({ data: data }, objJSON.privateKey, (err, token) => {
-                            if (err) {
-                                res.json({ result: 0, message: "Create token failed" });
-                            } else {
-                                var newToken = new Token({
-                                    Token: token,
-                                    LoginDate: moment(Date.now()).format("DD-MM-YYYY / hh:mm:ss A"),
-                                    LogoutDate: "",
-                                    Status: true
+                        if (password != data.Password) {
+                            User.updateOne(account, { WrongPasswordTime: wrong + 1 })
+                                .then(() => {
+                                    res.json({ result: 0, message: "Sai mật khẩu lần " + ++wrong });
                                 })
+                        } else {
+                            User.updateOne(account, { WrongPasswordTime: 0, ExpirationLock: 0 })
+                                .then(() => {
+                                    jwt.sign({ data: data }, objJSON.privateKey, (err, token) => {
+                                        if (err) {
+                                            res.json({ result: 0, message: "Create token failed" });
+                                        } else {
+                                            var newToken = new Token({
+                                                Token: token,
+                                                Account: data.Account,
+                                                LoginDate: moment(Date.now()).format("DD-MM-YYYY / hh:mm:ss A"),
+                                                LogoutDate: "",
+                                                Status: true
+                                            })
 
-                                newToken.save()
-                                    .then((data) => {
-                                        res.json({ result: 1, message: "Đăng nhập thành công", Token: token });
+                                            newToken.save()
+                                                .then((data) => {
+                                                    res.json({ result: 1, message: "Đăng nhập thành công", Token: token });
+                                                })
+                                                .catch((err) => {
+                                                    res.json({ result: 0, message: "Save token failed", error: err });
+                                                })
+                                        }
                                     })
-                                    .catch((err) => {
-                                        res.json({ result: 0, message: "Save token failed", error: err });
-                                    })
-                            }
-                        })
-
+                                })
+                        }
                     }
                 })
                 .catch((err) => {
@@ -172,12 +192,12 @@ module.exports = function (app, router, objJSON) {
 
     router.get("/admin/home", checkLogin, (req, res) => {
         Product.find()
-        .then((products) => {
-            res.render("admin/home", { data: products, formatMoney: formatMoney, Size: handleLoadSizeForAdmin })
-        })
-        .catch((err) => {
-            res.json({ result: 0, message: "Error" });
-        })
+            .then((products) => {
+                res.render("admin/home", { data: products, formatMoney: formatMoney, Size: handleLoadSizeForAdmin })
+            })
+            .catch((err) => {
+                res.json({ result: 0, message: "Error" });
+            })
     })
 
     router.get("/admin/create", checkLogin, (req, res) => {

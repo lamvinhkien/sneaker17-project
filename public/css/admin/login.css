@@ -14,27 +14,21 @@ body {
   max-width: 330px;
 }
 
-.form-signin .form-floating:focus-within {
+.title {
+  font-weight: 600;
+  font-size: 20px;
+  text-align: center;
+}
+
+.field-icon {
+  float: right;
+  margin-right: 7px;
+  margin-top: -26px;
+  position: relative;
   z-index: 2;
 }
 
-.form-signin input[type="email"] {
-  border-bottom-right-radius: 0;
-  border-bottom-left-radius: 0;
-}
-
-.form-signin input[type="password"] {
-  margin-bottom: 10px;
-  border-top-left-radius: 0;
-  border-top-right-radius: 0;
-}
-
-label {
-  padding-top: 10px;
-}
-
-.title {
-  font-weight: 600;
-  font-size: 18px;
-  text-align: center;
+.field-icon:hover {
+  color: #3B71CA;
+  cursor: pointer;
 }

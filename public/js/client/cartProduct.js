@@ -56,8 +56,15 @@ function renderProduct() {
                 `)
         })
     }
-
 }
+
+$("#deleteAll").on("click", () => {
+    productInCart = []
+    localStorage.setItem("products", JSON.stringify(productInCart))
+    renderProduct()
+    totalMoney()
+    setCartLength()
+})
 
 function setCartLength() {
     if (productInCart == "" || !productInCart) {

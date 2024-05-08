@@ -52,7 +52,7 @@
     font-size: 16px;
 }
 
-.quantity button{
+.quantity button {
     font-size: 6px;
 }
 
@@ -112,16 +112,37 @@
     color: #eee;
     font-weight: 500;
     text-decoration: none;
+    
     text-align: center;
 }
 
-.right .addToCart div{
+.right .addToCart div {
     border-radius: 40px;
     background-color: rgb(25, 25, 25);
     padding: 17px 0px 17px 0px;
 }
 
 .right .addToCart div:hover {
+    background-color: rgb(135, 135, 135);
+    cursor: pointer;
+}
+
+.backToHome {
+    font-size: 17px;
+    font-weight: 500;
+    text-decoration: none;
+    text-align: center;
+    color: rgba(0, 0, 0, 0.763);
+}
+
+.backToHome div {
+    padding: 8px 0px 8px 0px;
+    background-color: rgb(25, 25, 25);
+    border-radius: 20px;
+    color: #eee;
+}
+
+.backToHome div:hover {
     background-color: rgb(135, 135, 135);
     cursor: pointer;
 }

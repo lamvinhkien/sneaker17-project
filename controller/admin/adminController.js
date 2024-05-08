@@ -170,7 +170,7 @@ module.exports = function (app, router, objJSON) {
                     }
                 })
                 .catch((err) => {
-                    res.json({ result: 0, message: "Không tìm thấy người dùng" });
+                    res.json({ result: 0, message: "Tài khoản không tồn tại" });
                 })
         }
     })

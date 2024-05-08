@@ -48,15 +48,19 @@
               <a class="nav-link" href="#">TRA CỨU ĐƠN HÀNG</a>
             </li>
           </ul>
-          <form class="d-flex">
+          <form class="d-flex p-1">
             <input class="form-control me-2" type="text" placeholder="Tìm kiếm...">
-            <button class="btn btn-secondary" type="button"><i class="fa-solid fa-magnifying-glass"></i></button>
-          </form>
-          <form class="d-flex">
-            <a href="#" class="btn"><i class="fa-regular fa-heart"></i></a>
-            <a href="#" class="btn"><i class="fa-regular fa-user"></i></a>
-            <a href="/cart" class="btn "><i class="fa-solid fa-cart-shopping"></i> (<span id="totalCart"></span>)</a>
-          </form>
+            <button class="btn btn-outline-secondary" type="button"><i
+                    class="fa-solid fa-magnifying-glass"></i></button>
+        </form>
+
+        <form class="d-flex p-1">
+            <a href="/cart" class="btn btn-outline-secondary position-relative">
+                <i class="fa-solid fa-cart-shopping"></i>
+                <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger" id="totalCart">
+                </span>
+            </a>
+        </form>
         </div>
       </div>
     </nav>

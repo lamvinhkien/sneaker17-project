@@ -145,3 +145,18 @@
 .textNone {
     font-weight: 500;
 }
+
+#qr-code {
+    display: none;
+    text-align: center;
+}
+
+#qr-code .text {
+    font-size: 18px;
+    font-weight: 500;
+    color: rgba(225, 29, 29, 0.927);
+}
+
+#qrImg {
+    width: 100%;
+}

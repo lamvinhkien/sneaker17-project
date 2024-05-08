@@ -37,7 +37,7 @@ module.exports = (app, router, objJSON) => {
 
             newOrder.save()
                 .then((data) => {
-                    res.json({result: 1, message: "Đặt hàng thành công"})
+                    res.json({result: 1, message: "Đặt hàng thành công", order: data})
                 })
                 .catch((err) => {
                     res.json({ message: "Lưu thông tin không thành công" })

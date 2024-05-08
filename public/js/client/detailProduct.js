@@ -46,6 +46,7 @@ $(document).ready(() => {
                     quantity: 1
                 })
                 localStorage.setItem("products", JSON.stringify(productInCart))
+                window.location = "/cart"
             } else {
                 let getIndex = productInCart.findIndex(value => value.id === idProduct && value.Size === size)
                 let product = productInCart.find(value => value.id === idProduct && value.Size === size)
@@ -54,6 +55,7 @@ $(document).ready(() => {
                     quantity: ++product.quantity
                 }
                 localStorage.setItem("products", JSON.stringify(productInCart))
+                window.location = "/cart"
             }
         }
 

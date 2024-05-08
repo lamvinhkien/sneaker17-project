@@ -1,7 +1,20 @@
 var productInCart = localStorage.getItem("products") ? JSON.parse(localStorage.getItem("products")) : [];
 var totalMoneyInCart = JSON.parse(localStorage.getItem("totalMoney"))
+var myBank = {
+  BANK_ID: "MB",
+  ACCOUNT_NO: "0329149822"
+}
 
 renderOrder()
+warningText("#txtHoTen")
+warningText("#txtSDT")
+warningText("#txtEmail")
+warningText("#txtDiaChi")
+warningText("#city")
+warningText("#district")
+warningText("#ward")
+warningRadio("shipMethod", "#warningRadio1")
+warningRadio("paymentMethod", "#warningRadio2")
 
 $("input[type=radio][name=shipMethod]").on("change", () => {
   let shipMoney = parseInt($('input[name="shipMethod"]:checked').val())
@@ -21,6 +34,40 @@ $("input[type=radio][name=paymentMethod]").on("change", () => {
 })
 
 $("#completeOrder").on("click", () => {
+  let name = $("#txtHoTen").val()
+  let phoneNumber = $("#txtSDT").val()
+  let email = $("#txtEmail").val()
+  let address = $("#txtDiaChi").val()
+  let city = $("#city").val()
+  let district = $("#district").val()
+  let ward = $("#ward").val()
+  let shipMethod = $("#shipMethodHid").val()
+  let paymentMethod = $("#paymentMethodHid").val()
+  let note = $("#note").val()
+  let products = productInCart
+  let totalOrder = $("#totalOrder2").val()
+
+  if (name == "" || phoneNumber == "" || email == "" || address == "" || city == "" || district == "" || ward == "" || shipMethod == "" || paymentMethod == "") {
+    submitWarningText("#txtHoTen")
+    submitWarningText("#txtSDT")
+    submitWarningText("#txtEmail")
+    submitWarningText("#txtDiaChi")
+    submitWarningText("#city")
+    submitWarningText("#district")
+    submitWarningText("#ward")
+    submitWarningRadio("#shipMethodHid", "#warningRadio1", "giao hàng")
+    submitWarningRadio("#paymentMethodHid", "#warningRadio2", "thanh toán")
+  } else {
+    if(paymentMethod == "QR Code"){
+      disableInput()
+      $("#qrImg").attr("src", `https://img.vietqr.io/image/${myBank.BANK_ID}-${myBank.ACCOUNT_NO}-compact2.png?amount=${totalOrder}`)
+      $("#qr-code").css("display", "block")
+    }
+  }
+
+})
+
+function sendToAdmin() {
   $.post("/create-new-order", {
     Name: $("#txtHoTen").val(),
     PhoneNumber: $("#txtSDT").val(),
@@ -39,20 +86,9 @@ $("#completeOrder").on("click", () => {
       localStorage.setItem("products", JSON.stringify([]))
       localStorage.setItem("totalMoney", 0)
       window.location = "/order-success"
-    } else {
-      warningText("#txtHoTen")
-      warningText("#txtSDT")
-      warningText("#txtEmail")
-      warningText("#txtDiaChi")
-      warningText("#city")
-      warningText("#district")
-      warningText("#ward")
-      warningRadio("#shipMethodHid", "#warningRadio1", "giao hàng")
-      warningRadio("#paymentMethodHid", "#warningRadio2", "thanh toán")
-
     }
   })
-})
+}
 
 function renderOrder() {
   if (!productInCart || productInCart == "") {
@@ -100,6 +136,16 @@ function renderOrder() {
 }
 
 function warningText(id) {
+  $(id).on("change", () => {
+    if ($(id).val() == "") {
+      $(id).addClass("border-danger")
+    } else {
+      $(id).removeClass("border-danger")
+    }
+  })
+}
+
+function submitWarningText(id) {
   if ($(id).val() == "") {
     $(id).addClass("border-danger")
   } else {
@@ -107,12 +153,22 @@ function warningText(id) {
   }
 }
 
-function warningRadio(id1, id2, note) {
+function warningRadio(name, id2){
+  $(`input[name=${name}]`).on("change", () => {
+    $(id2).html("").removeClass("text-danger")
+  })
+}
+
+function submitWarningRadio(id1, id2, note) {
   if ($(id1).val() == "") {
     $(id2).html("Vui lòng chọn phương thức " + note + "!").addClass("text-danger fst-italic text-center")
   } else {
     $(id2).html("").removeClass("text-danger")
   }
+}
+
+function disableInput(){
+  $("#disabled-form").prop("disabled", "disabled")
 }
 
 function formatMoney(num) {

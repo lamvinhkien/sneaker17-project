@@ -32,7 +32,7 @@ module.exports = (app, router, objJSON) => {
                 Products: req.body.Products,
                 TotalOrder: req.body.TotalOrder,
                 OrderDate: moment(Date.now()).format("DD-MM-YYYY hh:mm A"),
-                OrderStatus: "Chưa xác nhận"
+                OrderStatus: req.body.OrderStatus
             })
 
             newOrder.save()

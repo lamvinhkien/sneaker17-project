@@ -43,8 +43,8 @@ $("#completeOrder").on("click", () => {
   let ward = $("#ward").val()
   let shipMethod = $("#shipMethodHid").val()
   let paymentMethod = $("#paymentMethodHid").val()
-  let note = $("#note").val()
-  let products = productInCart
+  // let note = $("#note").val()
+  // let products = productInCart
   let totalOrder = $("#totalOrder2").val()
 
   if (name == "" || phoneNumber == "" || email == "" || address == "" || city == "" || district == "" || ward == "" || shipMethod == "" || paymentMethod == "") {
@@ -58,16 +58,42 @@ $("#completeOrder").on("click", () => {
     submitWarningRadio("#shipMethodHid", "#warningRadio1", "giao hàng")
     submitWarningRadio("#paymentMethodHid", "#warningRadio2", "thanh toán")
   } else {
-    if(paymentMethod == "QR Code"){
+    if (paymentMethod == "QR Code") {
+      let description = randomString(10) + " " + phoneNumber
+
       disableInput()
-      $("#qrImg").attr("src", `https://img.vietqr.io/image/${myBank.BANK_ID}-${myBank.ACCOUNT_NO}-compact2.png?amount=${totalOrder}`)
+      $("#qrImg").attr("src", `https://img.vietqr.io/image/${myBank.BANK_ID}-${myBank.ACCOUNT_NO}-compact2.png?amount=${totalOrder}&addInfo=${description}`)
       $("#qr-code").css("display", "block")
+
+      setInterval(() => {
+        checkPaid(totalOrder, description)
+      }, 500)
+
+    } else {
+      sendToAdmin("Chưa xác nhận")
     }
   }
-
 })
 
-function sendToAdmin() {
+async function checkPaid(totalOrder, description) {
+  try {
+    const respone = await fetch("https://script.googleusercontent.com/macros/echo?user_content_key=CsZYG4eq_EPJetvZsJD0espYTLyqQIhc85u7eWmiU9EK7xT0DC9t52mPZ_Qckh1TFfkci2PvxvI3mGr2nXYcoMqeaYy7U03Wm5_BxDlH2jW0nuo2oDemN9CCS2h10ox_1xSncGQajx_ryfhECjZEnLFUvPrSqyPKAKhMhoTtt889xiVVi3hFhGfqB_DDRig5ubGN7HSfJgvGpwYICpWASzDs_6u6nHPc-4IFq3koQm28cv7vWJ9jUQ&lib=MPj5bqeMWIdbPHjBi6wXjKmu7Nkt9jO2A")
+    const data = await respone.json()
+    const lastPaid = data.data[data.data.length - 1]
+    lastPrice = lastPaid["Price"]
+    lastDescription = lastPaid["Description"]
+    if (lastPrice >= totalOrder && lastDescription.includes(description)) {
+      isSuccess = true
+      sendToAdmin("Đã thanh toán QR Code")
+    } else {
+      console.log("Không thành công")
+    }
+  } catch {
+    console.log("Error")
+  }
+}
+
+function sendToAdmin(orderStatus) {
   $.post("/create-new-order", {
     Name: $("#txtHoTen").val(),
     PhoneNumber: $("#txtSDT").val(),
@@ -80,7 +106,8 @@ function sendToAdmin() {
     PaymentMethod: $("#paymentMethodHid").val(),
     Note: $("#note").val(),
     Products: productInCart,
-    TotalOrder: $("#totalOrder2").val()
+    TotalOrder: $("#totalOrder2").val(),
+    OrderStatus: orderStatus
   }, (data) => {
     if (data.result == 1) {
       localStorage.setItem("products", JSON.stringify([]))
@@ -153,7 +180,7 @@ function submitWarningText(id) {
   }
 }
 
-function warningRadio(name, id2){
+function warningRadio(name, id2) {
   $(`input[name=${name}]`).on("change", () => {
     $(id2).html("").removeClass("text-danger")
   })
@@ -167,7 +194,7 @@ function submitWarningRadio(id1, id2, note) {
   }
 }
 
-function disableInput(){
+function disableInput() {
   $("#disabled-form").prop("disabled", "disabled")
 }
 
@@ -178,6 +205,17 @@ function formatMoney(num) {
   });
 }
 
+function randomString(length) {
+  let result = '';
+  const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+  const charactersLength = characters.length;
+  let counter = 0;
+  while (counter < length) {
+    result += characters.charAt(Math.floor(Math.random() * charactersLength));
+    counter += 1;
+  }
+  return result;
+}
 
 // Select Option TP - QUẬN - HUYỆN
 var citis = document.getElementById("city");

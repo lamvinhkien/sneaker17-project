@@ -9,7 +9,6 @@ const orderSchema = mongoose.Schema({
     Ward: String,
     ShipMethod: String,
     PaymentMethod: String,
-    Note: String,
     Products: Array,
     TotalOrder: Number,
     OrderDate: String,

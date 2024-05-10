@@ -244,19 +244,6 @@
                                     <input type="text" name="" id="" class="form-control" value="<%= data.Address %>, <%= data.Ward %>, <%= data.District %>, <%= data.City %>" disabled>
                                 </div>
                                 <div class="col-lg-12 col-md-12 col-sm-12 mb-3">
-                                    <label for="" class="form-label">Ghi chú</label>
-                                    <textarea name="" id="" cols="30" class="form-control" rows="2" disabled><%= data.Note %></textarea>
-                                </div>
-                                <div class="col-lg-12 col-md-12 col-sm-12 mb-3">
-                                    <label for="" class="form-label">Trạng thái đơn hàng</label>
-                                    <form action="/admin/update-order/<%= data._id %>" method="POST">
-                                        <div class="input-group">
-                                            <textarea name="OrderStatus" id="" class="form-control" cols="30" rows="2"><%= data.OrderStatus %></textarea>
-                                            <button class="btn btn-success rounded-0" type="submit" id="button-addon2">Cập nhật</button>
-                                        </div>
-                                    </form>
-                                </div>
-                                <div class="col-lg-12 col-md-12 col-sm-12 mb-3">
                                     <label for="" class="form-label">Sản phẩm đã đặt</label>
                                     <% data.Products.forEach((item, index)=>{ %>
                                         <div class="row mb-1">
@@ -311,6 +298,18 @@
                                     </div>
                                 </div>
                             </div>
+                        </div>
+                    </div>
+
+                    <div class="card shadow">
+                        <div class="card-body">
+                            <label for="" class="form-label font-weight-bold">Trạng thái đơn hàng</label>
+                            <form action="/admin/update-order/<%= data._id %>" method="POST">
+                                <div class="input-group">
+                                    <textarea name="OrderStatus" id="" class="form-control" cols="30" rows="2"><%= data.OrderStatus %></textarea>
+                                    <button class="btn btn-success rounded-0" type="submit" id="button-addon2">Cập nhật</button>
+                                </div>
+                            </form>
                         </div>
                     </div>
                 </div>

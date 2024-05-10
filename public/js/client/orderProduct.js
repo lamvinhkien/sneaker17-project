@@ -43,8 +43,6 @@ $("#completeOrder").on("click", () => {
   let ward = $("#ward").val()
   let shipMethod = $("#shipMethodHid").val()
   let paymentMethod = $("#paymentMethodHid").val()
-  // let note = $("#note").val()
-  // let products = productInCart
   let totalOrder = $("#totalOrder2").val()
 
   if (name == "" || phoneNumber == "" || email == "" || address == "" || city == "" || district == "" || ward == "" || shipMethod == "" || paymentMethod == "") {
@@ -83,7 +81,6 @@ async function checkPaid(totalOrder, description) {
     lastPrice = lastPaid["Price"]
     lastDescription = lastPaid["Description"]
     if (lastPrice >= totalOrder && lastDescription.includes(description)) {
-      isSuccess = true
       sendToAdmin("Đã thanh toán QR Code")
     } else {
       console.log("Không thành công")
@@ -104,7 +101,6 @@ function sendToAdmin(orderStatus) {
     Ward: $("#ward").val(),
     ShipMethod: $("#shipMethodHid").val(),
     PaymentMethod: $("#paymentMethodHid").val(),
-    Note: $("#note").val(),
     Products: productInCart,
     TotalOrder: $("#totalOrder2").val(),
     OrderStatus: orderStatus
@@ -188,7 +184,7 @@ function warningRadio(name, id2) {
 
 function submitWarningRadio(id1, id2, note) {
   if ($(id1).val() == "") {
-    $(id2).html("Vui lòng chọn phương thức " + note + "!").addClass("text-danger fst-italic text-center")
+    $(id2).html("Vui lòng chọn phương thức " + note + "!").addClass("text-danger fst-italic text-center h5")
   } else {
     $(id2).html("").removeClass("text-danger")
   }
@@ -224,7 +220,6 @@ var wards = document.getElementById("ward");
 var Parameter = {
   url: "https://raw.githubusercontent.com/kenzouno1/DiaGioiHanhChinhVN/master/data.json",
   method: "GET",
-  responseType: "application/json",
 };
 var promise = axios(Parameter);
 promise.then(function (result) {

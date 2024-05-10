@@ -28,7 +28,6 @@ module.exports = (app, router, objJSON) => {
                 Ward: req.body.Ward,
                 ShipMethod: req.body.ShipMethod,
                 PaymentMethod: req.body.PaymentMethod,
-                Note: req.body.Note,
                 Products: req.body.Products,
                 TotalOrder: req.body.TotalOrder,
                 OrderDate: moment(Date.now()).format("DD-MM-YYYY hh:mm A"),

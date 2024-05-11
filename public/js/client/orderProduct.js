@@ -4,74 +4,74 @@ var myBank = {
   BANK_ID: "MB",
   ACCOUNT_NO: "0329149822"
 }
+var citis = document.getElementById("city");
+var districts = document.getElementById("district");
+var wards = document.getElementById("ward");
+var Parameter = {
+  url: "https://raw.githubusercontent.com/kenzouno1/DiaGioiHanhChinhVN/master/data.json",
+  method: "GET",
+};
+var promise = axios(Parameter);
+promise.then(function (result) {
+  renderCity(result.data);
+});
 
 renderOrder()
-warningText("#txtHoTen")
-warningText("#txtSDT")
-warningText("#txtEmail")
-warningText("#txtDiaChi")
-warningText("#city")
-warningText("#district")
-warningText("#ward")
+$("#txtHoTen").on("change", validateName)
+$("#txtEmail").on("change", validateEmail)
+$("#txtSDT").on("change", validatePhoneNumber)
+$("#txtDiaChi").on("change", validateAddress)
+$("#city").on("change", validateCity)
+$("#district").on("change", validateDistrict)
+$("#ward").on("change", validateWard)
 warningRadio("shipMethod", "#warningRadio1")
 warningRadio("paymentMethod", "#warningRadio2")
+expressSaigon()
+getValueShipMethod()
+getValuePaymentMethod()
+handleCompleteOrder()
 
-$("input[type=radio][name=shipMethod]").on("change", () => {
-  let shipMoney = parseInt($('input[name="shipMethod"]:checked').val())
-  $("#shipMoneyHid").val(shipMoney)
-  if (shipMoney == 30000) {
-    $("#shipMethodHid").val("Tiêu chuẩn")
-  } else if (shipMoney == 60000) {
-    $("#shipMethodHid").val("Hoả tốc")
-  }
-  renderOrder()
-})
+function handleCompleteOrder() {
+  $("#completeOrder").on("click", () => {
+    let name = $("#txtHoTen").val()
+    let phoneNumber = $("#txtSDT").val()
+    let email = $("#txtEmail").val()
+    let address = $("#txtDiaChi").val()
+    let city = $("#city").val()
+    let district = $("#district").val()
+    let ward = $("#ward").val()
+    let shipMethod = $("#shipMethodHid").val()
+    let paymentMethod = $("#paymentMethodHid").val()
+    let totalOrder = $("#totalOrder2").val()
 
-$("input[type=radio][name=paymentMethod]").on("change", () => {
-  let paymentMethod = $('input[name="paymentMethod"]:checked').val()
-  $("#paymentMethodHid").val(paymentMethod)
-  renderOrder()
-})
-
-$("#completeOrder").on("click", () => {
-  let name = $("#txtHoTen").val()
-  let phoneNumber = $("#txtSDT").val()
-  let email = $("#txtEmail").val()
-  let address = $("#txtDiaChi").val()
-  let city = $("#city").val()
-  let district = $("#district").val()
-  let ward = $("#ward").val()
-  let shipMethod = $("#shipMethodHid").val()
-  let paymentMethod = $("#paymentMethodHid").val()
-  let totalOrder = $("#totalOrder2").val()
-
-  if (name == "" || phoneNumber == "" || email == "" || address == "" || city == "" || district == "" || ward == "" || shipMethod == "" || paymentMethod == "") {
-    submitWarningText("#txtHoTen")
-    submitWarningText("#txtSDT")
-    submitWarningText("#txtEmail")
-    submitWarningText("#txtDiaChi")
-    submitWarningText("#city")
-    submitWarningText("#district")
-    submitWarningText("#ward")
-    submitWarningRadio("#shipMethodHid", "#warningRadio1", "giao hàng")
-    submitWarningRadio("#paymentMethodHid", "#warningRadio2", "thanh toán")
-  } else {
-    if (paymentMethod == "QR Code") {
-      let description = randomString(10) + " " + phoneNumber
-
-      disableInput()
-      $("#qrImg").attr("src", `https://img.vietqr.io/image/${myBank.BANK_ID}-${myBank.ACCOUNT_NO}-compact2.png?amount=${totalOrder}&addInfo=${description}`)
-      $("#qr-code").css("display", "block")
-
-      setInterval(() => {
-        checkPaid(totalOrder, description)
-      }, 500)
-
+    if (name == "" || phoneNumber == "" || email == "" || address == "" || city == "" || district == "" || ward == "" || shipMethod == "" || paymentMethod == "") {
+      submitWarningText("#txtHoTen", "#validate-name", "Vui lòng nhập tên!")
+      submitWarningText("#txtSDT", "#validate-phoneNumber", "Vui lòng nhập số điện thoại!")
+      submitWarningText("#txtEmail", "#validate-email", "Vui lòng nhập Email!")
+      submitWarningText("#txtDiaChi", "#validate-address", "Vui lòng nhập địa chỉ!")
+      submitWarningText("#city", "#validate-city", "Vui lòng chọn tỉnh thành!")
+      submitWarningText("#district", "#validate-district", "Vui lòng chọn quận huyện!")
+      submitWarningText("#ward", "#validate-ward", "Vui lòng chọn phường xã!")
+      submitWarningRadio("#shipMethodHid", "#warningRadio1", "giao hàng")
+      submitWarningRadio("#paymentMethodHid", "#warningRadio2", "thanh toán")
     } else {
-      sendToAdmin("Chưa xác nhận")
+      if (paymentMethod == "QR Code") {
+        let description = randomString(10) + " " + phoneNumber
+
+        disableInput()
+        $("#qrImg").attr("src", `https://img.vietqr.io/image/${myBank.BANK_ID}-${myBank.ACCOUNT_NO}-compact2.png?amount=${totalOrder}&addInfo=${description}`)
+        $("#qr-code").css("display", "block")
+
+        setInterval(() => {
+          checkPaid(totalOrder, description)
+        }, 500)
+
+      } else {
+        sendToAdmin("Chưa xác nhận")
+      }
     }
-  }
-})
+  })
+}
 
 async function checkPaid(totalOrder, description) {
   try {
@@ -158,40 +158,40 @@ function renderOrder() {
 
 }
 
-function warningText(id) {
-  $(id).on("change", () => {
-    if ($(id).val() == "") {
-      $(id).addClass("border-danger")
-    } else {
-      $(id).removeClass("border-danger")
+function getValueShipMethod() {
+  $("input[type=radio][name=shipMethod]").on("change", () => {
+    let shipMoney = parseInt($('input[name="shipMethod"]:checked').val())
+    $("#shipMoneyHid").val(shipMoney)
+    if (shipMoney == 30000) {
+      $("#shipMethodHid").val("Tiêu chuẩn")
+    } else if (shipMoney == 60000) {
+      $("#shipMethodHid").val("Hoả tốc")
     }
+    renderOrder()
   })
 }
 
-function submitWarningText(id) {
-  if ($(id).val() == "") {
-    $(id).addClass("border-danger")
-  } else {
-    $(id).removeClass("border-danger")
-  }
-}
-
-function warningRadio(name, id2) {
-  $(`input[name=${name}]`).on("change", () => {
-    $(id2).html("").removeClass("text-danger")
+function getValuePaymentMethod() {
+  $("input[type=radio][name=paymentMethod]").on("change", () => {
+    let paymentMethod = $('input[name="paymentMethod"]:checked').val()
+    $("#paymentMethodHid").val(paymentMethod)
+    renderOrder()
   })
-}
-
-function submitWarningRadio(id1, id2, note) {
-  if ($(id1).val() == "") {
-    $(id2).html("Vui lòng chọn phương thức " + note + "!").addClass("text-danger fst-italic text-center h5")
-  } else {
-    $(id2).html("").removeClass("text-danger")
-  }
 }
 
 function disableInput() {
   $("#disabled-form").prop("disabled", "disabled")
+}
+
+function expressSaigon() {
+  $("#city").on("change", () => {
+    let city = $("#city").val()
+    if (city != "Thành phố Hồ Chí Minh") {
+      $(".express-saigon").attr("disabled", "disabled")
+    } else {
+      $(".express-saigon").removeAttr("disabled")
+    }
+  })
 }
 
 function formatMoney(num) {
@@ -213,18 +213,6 @@ function randomString(length) {
   return result;
 }
 
-// Select Option TP - QUẬN - HUYỆN
-var citis = document.getElementById("city");
-var districts = document.getElementById("district");
-var wards = document.getElementById("ward");
-var Parameter = {
-  url: "https://raw.githubusercontent.com/kenzouno1/DiaGioiHanhChinhVN/master/data.json",
-  method: "GET",
-};
-var promise = axios(Parameter);
-promise.then(function (result) {
-  renderCity(result.data);
-});
 function renderCity(data) {
   for (const x of data) {
     citis.options[citis.options.length] = new Option(x.Name, x.Name);
@@ -253,4 +241,148 @@ function renderCity(data) {
   };
 }
 
+function submitWarningText(id, validateId, message) {
+  if ($(id).val() == "") {
+    $(validateId).html(message)
+    $(id).addClass("border-danger")
+  }
+}
 
+function submitWarningRadio(id1, id2, note) {
+  if ($(id1).val() == "") {
+    $(id2).html("Vui lòng chọn phương thức " + note + "!").addClass("text-danger fst-italic text-center")
+  } else {
+    $(id2).html("").removeClass("text-danger")
+  }
+}
+
+function validateEmail() {
+  let message = $("#validate-email");
+  let email = $("#txtEmail")
+
+  if (email.val() == "") {
+    message.html("Vui lòng nhập Email!")
+    email.addClass("border-danger")
+  } else if (!formatEmail(email.val())) {
+    message.html("Email không hợp lệ!")
+    email.addClass("border-danger")
+  } else {
+    message.html("")
+    email.removeClass("border-danger")
+    email.addClass("border-success")
+  }
+}
+
+function formatEmail(email) {
+  return email.match(
+    /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
+  )
+}
+
+function validatePhoneNumber() {
+  let message = $("#validate-phoneNumber");
+  let phoneNo = $("#txtSDT")
+
+  if (phoneNo.val() == "") {
+    message.html("Vui lòng nhập số điện thoại!")
+    phoneNo.addClass("border-danger")
+  } else if (!formatPhoneNumber(phoneNo.val())) {
+    message.html("Số điện thoại không hợp lệ!")
+    phoneNo.addClass("border-danger")
+  } else {
+    message.html("")
+    phoneNo.removeClass("border-danger")
+    phoneNo.addClass("border-success")
+  }
+}
+
+function formatPhoneNumber(phoneNo) {
+  return phoneNo.match(
+    /(0[3|5|7|8|9])+([0-9]{8})\b/g
+  )
+}
+
+function validateName(){
+  let message = $("#validate-name");
+  let name = $("#txtHoTen")
+
+  if (name.val() == "") {
+    message.html("Vui lòng nhập tên!")
+    name.addClass("border-danger")
+  } else if (!formatName(name.val())) {
+    message.html("Tên không hợp lệ!")
+    name.addClass("border-danger")
+  } else {
+    message.html("")
+    name.removeClass("border-danger")
+    name.addClass("border-success")
+  }
+}
+
+function formatName(name){
+  return name.match(
+    /^[a-zA-ZÀÁÂÃÈÉÊÌÍÒÓÔÕÙÚĂĐĨŨƠàáâãèéêìíòóôõùúăđĩũơƯĂẠẢẤẦẨẪẬẮẰẲẴẶẸẺẼỀỀỂưăạảấầẩẫậắằẳẵặẹẻẽềềểỄỆỈỊỌỎỐỒỔỖỘỚỜỞỠỢỤỦỨỪễếệỉịọỏốồổỗộớờởỡợụủứừỬỮỰỲỴÝỶỸửữựỳỵỷỹ'\s]*$/
+  )
+}
+
+function validateAddress(){
+  let message = $("#validate-address");
+  let address = $("#txtDiaChi")
+
+  if (address.val() == "") {
+    message.html("Vui lòng nhập địa chỉ!")
+    address.addClass("border-danger")
+  } else {
+    message.html("")
+    address.removeClass("border-danger")
+    address.addClass("border-success")
+  }
+}
+
+function validateCity(){
+  let message = $("#validate-city");
+  let city = $("#city")
+
+  if (city.val() != "") {
+    message.html("")
+    city.removeClass("border-danger")
+    city.addClass("border-success")
+  } else {
+    city.addClass("border-danger")
+    message.html("Vui lòng chọn tỉnh thành!")
+  }
+}
+
+function validateDistrict(){
+  let message = $("#validate-district");
+  let district = $("#district")
+
+  if (district.val() != "") {
+    message.html("")
+    district.removeClass("border-danger")
+    district.addClass("border-success")
+  } else {
+    district.addClass("border-danger")
+    message.html("Vui lòng chọn quận huyện!")
+  }
+}
+
+function validateWard(){
+  let message = $("#validate-ward");
+  let ward = $("#ward")
+
+  if (ward.val() != "") {
+    message.html("")
+    ward.removeClass("border-danger")
+    ward.addClass("border-success")
+  } else {
+    ward.addClass("border-danger")
+    message.html("Vui lòng chọn phường xã!")
+  }
+}
+
+function warningRadio(name, id2) {
+  $(`input[name=${name}]`).on("change", () => {
+    $(id2).html("").removeClass("text-danger")
+  })
+}

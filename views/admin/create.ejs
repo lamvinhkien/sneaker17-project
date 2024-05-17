@@ -18,6 +18,7 @@
 
     <!-- Custom styles for this template-->
     <link href="/css/sb-admin-2.min.css" rel="stylesheet">
+    <link href="/css/admin/create.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
         integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A=="
         crossorigin="anonymous" referrerpolicy="no-referrer" />
@@ -211,15 +212,15 @@
                         </div>
 
                         <div class="card-body">
-                            <form action="/admin/create-new" , method="POST">
+                            <form action="/admin/create-new" method="POST">
                                 <div class="row">
                                     <div class="col-lg-6 col-md-6 col-12">
                                         <label for="txtName" class="form-label">Tên sản phẩm</label>
-                                        <input type="text" class="form-control" id="txtName" name="Name"">
+                                        <input type="text" class="form-control" id="txtName" name="Name" value="">
                                     </div>
                                     <div class=" col-lg-6 col-md-6 col-12">
                                         <label for="txtPrice" class="form-label">Giá sản phẩm</label>
-                                        <input type="text" class="form-control" id="txtPrice" name="Price">
+                                        <input type="text" class="form-control" id="txtPrice" name="Price" value="">
                                     </div>
                                 </div>
 
@@ -316,7 +317,7 @@
 
                                     <div class="col-lg-6 col-md-6 col-12">
                                         <label for="txtStatus" class="form-label">Ngày nhập hàng</label>
-                                        <input type="date" class="form-control" id="txtDateCreate" name="DateCreate">
+                                        <input type="date" id="txtDateCreate" name="DateCreate">
                                     </div>
                                 </div>
 
@@ -498,7 +499,7 @@
 
                                 <div class="row mt-3">
                                     <div class="col-12">
-                                        <button type="submit" class="btn btn-success w-100">Thêm</button>
+                                        <button type="submit" class="btn btn-success w-100">Thêm sản phẩm</button>
                                     </div>
                                 </div>
                             </form>

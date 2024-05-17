@@ -139,7 +139,7 @@ module.exports = function (app, router, objJSON) {
                         if (password != data.Password) {
                             User.updateOne(account, { WrongPasswordTime: wrong + 1 })
                                 .then(() => {
-                                    res.json({ result: 0, message: "Sai mật khẩu lần " + ++wrong });
+                                    res.json({ result: 0, message: "Sai mật khẩu" });
                                 })
                         } else {
                             User.updateOne(account, { WrongPasswordTime: 0, ExpirationLock: 0 })
@@ -205,25 +205,17 @@ module.exports = function (app, router, objJSON) {
     })
 
     router.post("/admin/create-new", checkLogin, (req, res) => {
-        if (!req.body.Name || !req.body.Price) {
-            res.json({ result: 0, message: "Vui lòng nhập tên và giá sản phẩm" })
+        if (!req.body.Name || !req.body.Price || !req.body.Type || !req.body.Avatar) {
+            res.json({ result: 0, message: "Vui lòng nhập tên, giá, loại, hình ảnh sản phẩm" })
         } else {
             var name = req.body.Name;
             var price = parseFloat(req.body.Price);
-
-            var type = "";
-            if (req.body.Type) {
-                type = req.body.Type;
-            }
+            var type = req.body.Type;
+            var avatar = req.body.Avatar;
 
             var status = "";
             if (req.body.Status) {
                 status = req.body.Status;
-            }
-
-            var avatar = ""
-            if (req.body.Avatar) {
-                avatar = req.body.Avatar;
             }
 
             var detailavatar1 = ""
@@ -393,25 +385,17 @@ module.exports = function (app, router, objJSON) {
     })
 
     router.post("/admin/update", checkLogin, (req, res) => {
-        if (!req.body.Name || !req.body.Price || !req.body._idProduct) {
+        if (!req.body.Name || !req.body.Price || !req.body.Type || !req.body.Avatar || !req.body._idProduct) {
             res.json({ result: 0, message: "Không tìm thấy sản phẩm" })
         } else {
             var name = req.body.Name;
             var price = parseFloat(req.body.Price);
-
-            var type = "";
-            if (req.body.Type) {
-                type = req.body.Type;
-            }
+            var type = req.body.Type;
+            var avatar = req.body.Avatar;
 
             var status = "";
             if (req.body.Status) {
                 status = req.body.Status;
-            }
-
-            var avatar = ""
-            if (req.body.Avatar) {
-                avatar = req.body.Avatar;
             }
 
             var detailavatar1 = ""

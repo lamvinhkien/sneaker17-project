@@ -46,7 +46,6 @@ $(document).ready(function () {
                 type: 'POST', // For jQuery < 1.9
                 success: function (data) {
                     if (data.result == 1) {
-                        alert("Tải hình ảnh thành công");
                         $("#" + eventHide).val(data.fileName)
                         $("#" + label).html(data.fileName)
                         $("#" + showImg).attr("src", "/upload/" + data.fileName)
